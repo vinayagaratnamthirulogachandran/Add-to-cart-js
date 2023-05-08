@@ -39,7 +39,10 @@ function loadContent(){
 // remove item
 function removeItem(){
     if(confirm('Are you sure?')){
-    this.parentElement.remove();
+        let title = this.parentElement.querySelector('.cart-food-title').innerHTML;
+        itemList = itemList.filter(el=>el.title!=title);
+        this.parentElement.remove();
+        loadContent();
     }
 }
 
@@ -50,6 +53,8 @@ function changeQty(){
     }
 }
 
+let itemList = [];
+
 // Add cart
 function addCart(){
     let food = this.parentElement;
@@ -57,12 +62,23 @@ function addCart(){
     let price = food.querySelector('.food-price').innerHTML;
     let img = food.querySelector('.food-img').src;
 
+    let newProduct = {title, price, img}
+
+    // check product already exist
+    if (itemList.find((el) => el.title == newProduct.title)){
+        alert('Product already add in cart');
+        return;
+    }else{
+        itemList.push(newProduct);
+    }
+
     let newProductElement = createCartProducts(title, price, img);
     let element = document.createElement('div');
     element.innerHTML = newProductElement;
 
     let cartBasket = document.querySelector('.cart-content');
     cartBasket.append(element);
+    loadContent();
 }
 
 function createCartProducts(title, price, img){
