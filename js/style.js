@@ -34,6 +34,8 @@ function loadContent(){
     cartBtn.forEach((btn) =>{
         btn.addEventListener('click', addCart)
     });
+
+    updateTotal();
 }
 
 // remove item
